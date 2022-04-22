@@ -32,11 +32,7 @@ var signUp= (req,res)=>{
     const role=req.body.role
     const sql=`SELECT * FROM users WHERE email=? `
     db.query(sql,email,(err,result)=>{
-<<<<<<< HEAD
-        console.log(result);
-=======
        //console.log(result);
->>>>>>> 5adc8563a3aee8a45b7559e9a98aa534b6ffef1a
         if(err){
             res.send(err)
         }
@@ -58,10 +54,12 @@ var signUp= (req,res)=>{
 
     //khairi: user/signIn
     var signIn=(req,res)=>{
+        console.log(req.body);
         const email=req.body.email
     const password=req.body.password
     const sqlSel=`SELECT * FROM users WHERE  email=? AND password=? `
     db.query(sqlSel,[email,password],(err,result)=>{
+        console.log(result);
         if(err){
             res.send(err)
         }
