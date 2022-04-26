@@ -1,5 +1,6 @@
 var db = require("../database-mysql");
 const bcrypt = require("bcrypt")
+const { deleteOne, selectUsers} = require("../database-mysql/UserModel.js");
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -7,7 +8,29 @@ const bcrypt = require("bcrypt")
  * Fradj : User/getAll
  */
 
+ var getAll= function (req,res) {
+    selectUsers((err, results) => {
+      if (err) {
+          res.status(500).send(err);
+      }
+      else {
+          res.status(201).json(results);
+      }
+    })
+    }
 
+
+    var deleteUser = function (req, res) {
+        let id = req.params.id;
+        deleteOne(id, (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+            else {
+                res.status(201).json(results);
+            }
+        })
+    } ;
 var selectAll = function (req, res) {
     db.query("SELECT * FROM users", (err, items, fields) => {
         if (err) {
@@ -126,7 +149,9 @@ module.exports = {
 selectAll,
 selectOne,
 signUp,
-signIn
+signIn,
+deleteUser,
+getAll
 };
 
 
