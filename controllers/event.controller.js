@@ -1,5 +1,5 @@
 var db = require("../database-mysql");
-const { getOne, select, add, modifOne, deleteOne } = require("../database-mysql/eventModel.js");
+const { getOne, select, add, modifOne, deleteOne, selectManyById } = require("../database-mysql/eventModel.js");
 
 
 
@@ -15,18 +15,43 @@ module.exports = {
       }
     })
     },
+    selectAllById:function(req,res){
+        selectManyById(req.params.id,(err, results) => {
+            if (err) {
+             res.status(500).send(err);
+            }
+            else {
+             res.status(201).json(results);
+            }
+        })
+    },
 
-  selectAll:function(req,res){
-select((err, results) => {
-  if (err) {
-      res.status(500).send(err);
-  }
-  else {
-      res.status(201).json(results);
-  }
-})
+selectAll:function(req,res){
+    select((err, results) => {
+        if (err) {
+         res.status(500).send(err);
+        }
+        else {
+         res.status(201).json(results);
+        }
+    })
 },
+
+
+selectAllById:function(req,res){
+    selectManyById(req.params.id,(err, results) => {
+        if (err) {
+         res.status(500).send(err);
+        }
+        else {
+         res.status(201).json(results);
+        }
+    })
+},
+
+
   addEvent: function (req, res) {
+      console.log(req.body);
     add(req.body, (err, results) => {
         if (err) {
             res.status(500).send(err);
@@ -48,7 +73,7 @@ modifEvent: function (req, res) {
         }
     })
 },
-deleteEvent: function (req, res) {
+deleteEvent: function (req, res) {   
     let id = req.params.id;
     deleteOne(id, (err, results) => {
         if (err) {

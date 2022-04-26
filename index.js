@@ -2,7 +2,8 @@ const express = require("express");
 
 const userRoutes = require('./routes/user.routes');
 const eventRoutes = require('./routes/event.routes')
-
+const favoriteRoutes =require('./routes/favorite.routes')
+const bodyParser= require('body-parser')
 
 const app = express();
 const PORT = process.env.PORT || 3000
@@ -12,10 +13,13 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/public"));
+app.use(bodyParser.json({limit: '50mb'}));
+
 
 
 app.use("/api/user", userRoutes);
 app.use("/api/event", eventRoutes);
+app.use("/api/favorite",favoriteRoutes)
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /**
